@@ -3,6 +3,7 @@ _deps/
 CMakeFiles/
 CMakeCache.txt
 Makefile
+*.cmake
 *.jpg
 *.txt
 ascii-convert
