@@ -1,6 +1,6 @@
 # ASCII-CONVERT
 ## What is it
-An Image to ASCII converter capable of turning images (.bmp, .png, .jpg, etc.) into ASCII characters. Can convert in 1:1 and 2 to 1 modes.
+An Image to ASCII converter capable of turning images (.bmp, .png, .jpg, etc.) into ASCII characters. Can convert in 1:1 and 2:1 modes.
 
 ### What's the difference between 1:1 and 2:1?
 When we convert an image to ASCII 1:1, the output looks a bit vertically stretched because in fonts characters are always 2 times longer in hight comparing to width. And in 1:1 mode, every pixel from the image is mapped to a single ASCII character, while in 2:1, every 2 pixels (taken vertically) are mapped to a single character, making the output look natural.
