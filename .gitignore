@@ -1,0 +1,8 @@
+.vscode/
+_deps/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+*.jpg
+*.txt
+ascii-convert
