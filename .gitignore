@@ -5,5 +5,4 @@ CMakeCache.txt
 Makefile
 *.cmake
 *.jpg
-*.txt
 ascii-convert

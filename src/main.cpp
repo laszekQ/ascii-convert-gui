@@ -14,10 +14,10 @@ int main(int argc, const char* argv[])
     if(argc < 5)
     {
         std::cout << "Not enough arguments!\n";
-        std::cout << "Usage:\nascii-convert [FILE_IN] [MODE] [GRADIENT LENGTH] [SQUARED] [FILE_OUT]\n";
+        std::cout << "Usage:\n./ascii-convert [FILE_IN] [MODE] [GRADIENT LENGTH] [SQUARED] [FILE_OUT]\n";
         std::cout << "MODE: d - dark, l - light\n"; 
         std::cout << "GRADIENT LENGTH: from 3 to 10, the higher the value the more details there will be\n";
-        std::cout << "SQUARED - square the image at the cost of details\n";
+        std::cout << "2:1 - enable 2:1\n";
         std::cout << "FILE_OUT - can be empty, which would redirect the output to the console" << std::endl;
         return -1;
     }
