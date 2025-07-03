@@ -17,7 +17,7 @@ int getBrightness(sf::Color pixel)
     return bright;
 }
 
-char pixelsToASCII(std::initializer_list<sf::Color> pixels, std::string &gradient, char mode)
+char pixelsToASCII(std::initializer_list<sf::Color> pixels, std::string &gradient, char c_mode)
 {
     int bright = 0;
     for(const auto& pixel : pixels)
@@ -27,43 +27,61 @@ char pixelsToASCII(std::initializer_list<sf::Color> pixels, std::string &gradien
     int step = 256 / gradient.length();
     int index = bright / step;
 
-    if(mode == 'd')
+    if(c_mode == 'd')
         index = gradient.length() - index;
     
     return gradient[index];
 }
 
-char_vector imgToAscii(sf::Image &img, std::string gradient, int grad_n, char mode, bool squared)
+char_vector imgToAscii(sf::Image &img, std::string gradient, int grad_n, char c_mode, char mode)
 {
     const uint32_t WIDTH  = img.getSize().x;
     const uint32_t HEIGHT = img.getSize().y;
-    uint32_t height = HEIGHT / (1 + squared);
-    char_vector out(height, std::vector<char>(WIDTH));
+    uint32_t height = HEIGHT / (1 + (mode == '2'));
+    uint32_t width = WIDTH * (1 + (mode == '3'));
+    char_vector out(height, std::vector<char>(width));
 
     gradient = gradient.substr(0, grad_n);
 
-    int step = 1 + squared;
+    int step_y = 1 + (mode == '2');
 
-    for(uint32_t i = 0; i <= HEIGHT - step; i += step)
+    for(uint32_t i = 0; i <= HEIGHT - step_y; i += step_y)
     {
+        int x = 0;
         for(uint32_t j = 0; j < WIDTH; j++)
         {
             char c = 0;
-            int h = i;
-            if(squared)
+            int y = i;
+            switch(mode)
+            {
+            case '1':
+            {
+                sf::Color pixel = img.getPixel({j, i});
+                c = pixelsToASCII({pixel}, gradient, c_mode);
+                out[i][j] = c;
+                break;
+            }
+            case '2':
             {
                 sf::Color pixel1 = img.getPixel({j, i});
                 sf::Color pixel2 = img.getPixel({j, i + 1});
-                c = pixelsToASCII({pixel1, pixel2}, gradient, mode);
-                h /= 2;
+                c = pixelsToASCII({pixel1, pixel2}, gradient, c_mode);
+                y /= 2;
+                out[y][j] = c;
+                break;
             }
-            else
+            case '3':
             {
-                sf::Color pixel = img.getPixel({j, i});
-                c = pixelsToASCII({pixel}, gradient, mode);
+                sf::Color pixel = img.getPixel({j, i}); 
+                c = pixelsToASCII({pixel}, gradient, c_mode);
+                out[i][x] = c;
+                out[i][x + 1] = c;
+                x += 2;
+                break;
             }
-
-            out[h][j] = c;
+            default:
+                return out;
+            }
         }
     }
 

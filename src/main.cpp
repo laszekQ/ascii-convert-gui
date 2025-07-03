@@ -14,18 +14,18 @@ int main(int argc, const char* argv[])
     if(argc < 5)
     {
         std::cout << "Not enough arguments!\n";
-        std::cout << "Usage:\n./ascii-convert [FILE_IN] [MODE] [GRADIENT LENGTH] [SQUARED] [FILE_OUT]\n";
-        std::cout << "MODE: d - dark, l - light\n"; 
+        std::cout << "Usage:\n./ascii-convert [FILE_IN] [COLOR MODE] [GRADIENT LENGTH] [MODE] [FILE_OUT]\n";
+        std::cout << "COLOR MODE: d - dark, l - light\n"; 
         std::cout << "GRADIENT LENGTH: from 3 to 10, the higher the value the more details there will be\n";
-        std::cout << "2:1 - enable 2:1\n";
+        std::cout << "MODE - 1 - 1:1, 2 - 2:1, 3 - 1:2\n";
         std::cout << "FILE_OUT - can be empty, which would redirect the output to the console" << std::endl;
         return -1;
     }
 
     const char* FILE_IN  = argv[1];
-    const char  MODE     = argv[2][0];
+    const char  COLOR_MODE     = argv[2][0];
     const int   GRAD     = std::atoi(argv[3]);
-    const bool  SQUARED  = (argv[4][0] == '1' ? true : false);
+    const char  MODE  = argv[4][0];
 
     sf::Image img_in;
     if(!img_in.loadFromFile(FILE_IN))
@@ -35,7 +35,7 @@ int main(int argc, const char* argv[])
     }
 
     std::string gradient = " .:-=+*#%@";
-    char_vector out = imgToAscii(img_in, gradient, GRAD, MODE, SQUARED);
+    char_vector out = imgToAscii(img_in, gradient, GRAD, MODE, MODE);
 
     if(argc == 6)
     {
